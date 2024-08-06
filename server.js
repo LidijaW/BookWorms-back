@@ -6,7 +6,7 @@ const bookRoutes = require('./routes/bookRoutes');
 const adRoutes = require('./routes/adRoutes');
 const sellerRoutes = require('./routes/sellerRoutes');
 const userRoutes = require('./routes/userRoutes');
-const authRoutes = require('./routes/authRoutes'); // Dodaj ovu liniju
+const authRoutes = require('./routes/authRoutes'); 
 
 dotenv.config();
 
