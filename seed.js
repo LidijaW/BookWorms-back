@@ -10,9 +10,9 @@ const books = [
         author: 'J.R.R. Tolkien',
         genre: 'Fantasy',
         pages: 310,
-        publicationYear: 1937,
+        year: 1937,
         edition: '1st',
-        literatureType: 'Roman',
+        type: 'Roman',
         level: null,
         yearLevel: null
     },
@@ -21,9 +21,9 @@ const books = [
         author: 'Ivo Kolar',
         genre: 'Educational',
         pages: 200,
-        publicationYear: 2020,
+        year: 2020,
         edition: '2nd',
-        literatureType: 'Udzbenik',
+        type: 'Udzbenik',
         level: 'Srednja škola',
         yearLevel: '1'
     }
