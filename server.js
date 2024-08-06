@@ -5,6 +5,8 @@ const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 
 const authRoutes = require('./routes/auth');
+const bookRoutes = require('./routes/bookRoutes');
+const adRoutes = require('./routes/adRoutes');
 
 const app = express();
 
@@ -15,14 +17,14 @@ app.use(cors({
 
 app.use(express.json());
 app.use(cookieParser());
-app.use('/auth', authRoutes);
 
-mongoose.connect(process.env.MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-})
-.then(() => console.log('Connected to Database'))
-.catch(err => console.error('Could not connect to Database', err));
+app.use('/auth', authRoutes);
+app.use('/books', bookRoutes);
+app.use('/ads', adRoutes);
+
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('Connected to Database'))
+  .catch(err => console.error('Could not connect to Database', err));
 
 const PORT = process.env.PORT || 3000;
 

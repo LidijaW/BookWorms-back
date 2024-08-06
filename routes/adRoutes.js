@@ -2,25 +2,28 @@ const express = require('express');
 const Ad = require('../models/Ad');
 const router = express.Router();
 
-// Get all ads
+// Dohvaćanje svih oglasa
 router.get('/', async (req, res) => {
-    try {
-        const ads = await Ad.find().populate('book seller');
-        res.json(ads);
-    } catch (err) {
-        res.status(500).json({ message: err.message });
-    }
+  try {
+    const ads = await Ad.find().populate('book').populate('seller');
+    res.status(200).json(ads);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
 });
 
-// Create a new ad
+// Kreiranje novog oglasa
 router.post('/', async (req, res) => {
-    const ad = new Ad(req.body);
-    try {
-        const newAd = await ad.save();
-        res.status(201).json(newAd);
-    } catch (err) {
-        res.status(400).json({ message: err.message });
-    }
+  const { adCode, description, publishDate, adType, book, seller } = req.body;
+
+  try {
+    const newAd = new Ad({ adCode, description, publishDate, adType, book, seller });
+    await newAd.save();
+    res.status(201).json(newAd);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
 });
 
 module.exports = router;
+
