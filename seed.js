@@ -4,73 +4,99 @@ const Book = require('./models/Book');
 const Seller = require('./models/Seller');
 const Ad = require('./models/Ad');
 
-const books = [
-    {
-        title: 'Hobit',
-        author: 'J.R.R. Tolkien',
-        genre: 'Fantasy',
-        pages: 310,
-        year: 1937,
-        edition: '1st',
-        type: 'Roman',
-        level: null,
-        yearLevel: null
-    },
-    {
-        title: 'Matematika 1',
-        author: 'Ivo Kolar',
-        genre: 'Educational',
-        pages: 200,
-        year: 2020,
-        edition: '2nd',
-        type: 'Udzbenik',
-        level: 'Srednja škola',
-        yearLevel: '1'
-    }
-];
-
-const sellers = [
-    {
-        firstName: 'Ivan',
-        lastName: 'Horvat',
-        email: 'ivan@example.com'
-    },
-    {
-        firstName: 'Ana',
-        lastName: 'Kovač',
-        email: 'ana@example.com'
-    }
-];
-
-const ads = [
-    {
-        code: 'A001',
-        description: 'Prodajem knjigu Hobit',
-        date: new Date(),
-        type: 'prodaja'
-    },
-    {
-        code: 'A002',
-        description: 'Razmjenjujem knjigu Matematika 1',
-        date: new Date(),
-        type: 'razmjena'
-    }
-];
-
-mongoose.connect(process.env.MONGODB_URI, {
-})
-
-.then(async () => {
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => {
     console.log('Connected to Database');
-    await Book.deleteMany({});
-    await Seller.deleteMany({});
-    await Ad.deleteMany({});
+    
+    // Podaci za knjige
+    const books = [
+      {
+        title: "Hobit",
+        author: "J.R.R. Tolkien",
+        genre: "Fantastika",
+        pages: 310,
+        publicationYear: 1937,
+        edition: "Prvo izdanje",
+        literatureType: "Roman"
+      },
+      {
+        title: "Matematika 1",
+        author: "Ivo Kamenar",
+        genre: "Udzbenik",
+        pages: 200,
+        publicationYear: 2010,
+        edition: "Drugo izdanje",
+        literatureType: "Udzbenik",
+        educationLevel: "Srednja skola",
+        year: 2010
+      }
+    ];
 
-    await Book.insertMany(books);
-    await Seller.insertMany(sellers);
-    await Ad.insertMany(ads);
+    // Podaci za prodavače
+    const sellers = [
+      {
+        firstName: "Ivan",
+        lastName: "Ivic",
+        email: "ivan.ivic@example.com"
+      },
+      {
+        firstName: "Ana",
+        lastName: "Anic",
+        email: "ana.anic@example.com"
+      }
+    ];
 
-    console.log('Database seeded successfully');
-    mongoose.disconnect();
-})
-.catch(err => console.error('Could not connect to Database', err));
+    // Unos knjiga
+    Book.insertMany(books)
+      .then(insertedBooks => {
+        console.log('Books inserted');
+
+        // Unos prodavača
+        Seller.insertMany(sellers)
+          .then(insertedSellers => {
+            console.log('Sellers inserted');
+
+            // Kreiranje oglasa sa stvarnim ID-ovima knjiga i prodavača
+            const ads = [
+              {
+                adCode: "A001",
+                description: "Prodajem knjigu Hobit",
+                publishDate: new Date(),
+                adType: "prodaja",
+                book: insertedBooks[0]._id,
+                seller: insertedSellers[0]._id
+              },
+              {
+                adCode: "A002",
+                description: "Razmjenjujem knjigu Matematika 1",
+                publishDate: new Date(),
+                adType: "razmjena",
+                book: insertedBooks[1]._id,
+                seller: insertedSellers[1]._id
+              }
+            ];
+
+            // Unos oglasa
+            Ad.insertMany(ads)
+              .then(() => {
+                console.log('Ads inserted');
+                mongoose.connection.close();
+              })
+              .catch(err => {
+                console.error('Error inserting ads:', err);
+                mongoose.connection.close();
+              });
+          })
+          .catch(err => {
+            console.error('Error inserting sellers:', err);
+            mongoose.connection.close();
+          });
+      })
+      .catch(err => {
+        console.error('Error inserting books:', err);
+        mongoose.connection.close();
+      });
+  })
+  .catch(err => {
+    console.error('Could not connect to Database', err);
+  });
