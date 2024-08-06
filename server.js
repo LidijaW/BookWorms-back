@@ -4,27 +4,25 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 
-const authRoutes = require("./routes/auth");
+const authRoutes = require('./routes/auth');
 
 const app = express();
 
 app.use(cors({ 
-    origin: 'http://localhost:8081/',
+    origin: 'http://localhost:8081',
     credentials: true
 }));
 
 app.use(express.json());
 app.use(cookieParser());
-app.use("/auth", authRoutes);
+app.use('/auth', authRoutes);
 
-// Povezivanje s MongoDB-om
 mongoose.connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true
+    useUnifiedTopology: true
 })
 .then(() => console.log('Connected to Database'))
-.catch(err => console.error('Could not connect to Database'));
+.catch(err => console.error('Could not connect to Database', err));
 
 const PORT = process.env.PORT || 3000;
 
