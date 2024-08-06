@@ -5,26 +5,26 @@ const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 
 const authRoutes = require('./routes/auth');
-const bookRoutes = require('./routes/bookRoutes');
 const adRoutes = require('./routes/adRoutes');
+const sellerRoutes = require('./routes/sellerRoutes'); 
 
 const app = express();
 
 app.use(cors({ 
-    origin: 'http://localhost:8081',
+    origin: 'http://localhost:8081/',
     credentials: true
 }));
 
 app.use(express.json());
 app.use(cookieParser());
-
 app.use('/auth', authRoutes);
-app.use('/books', bookRoutes);
 app.use('/ads', adRoutes);
+app.use('/sellers', sellerRoutes); 
+app.use('/books', bookRoutes);
 
-mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('Connected to Database'))
-  .catch(err => console.error('Could not connect to Database', err));
+mongoose.connect(process.env.MONGODB_URI)
+    .then(() => console.log('Connected to Database'))
+    .catch(err => console.error('Could not connect to Database'));
 
 const PORT = process.env.PORT || 3000;
 

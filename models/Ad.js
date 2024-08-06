@@ -25,7 +25,7 @@ const adSchema = new mongoose.Schema({
     },
     seller: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Seller',
+        ref: 'Seller', // Provjeri da je referenca ispravna
         required: true
     }
 });

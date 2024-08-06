@@ -1,5 +1,7 @@
 const express = require('express');
 const Ad = require('../models/Ad');
+const Book = require('../models/Book');
+const Seller = require('../models/Seller'); // Provjeri da je uvezen
 const router = express.Router();
 
 // Dohvaćanje svih oglasa
@@ -8,7 +10,8 @@ router.get('/', async (req, res) => {
     const ads = await Ad.find().populate('book').populate('seller');
     res.status(200).json(ads);
   } catch (error) {
-    res.status(500).json({ message: 'Server error' });
+    console.error(error);
+    res.status(500).json({ message: 'Server error', error: error.message });
   }
 });
 
@@ -21,9 +24,12 @@ router.post('/', async (req, res) => {
     await newAd.save();
     res.status(201).json(newAd);
   } catch (error) {
-    res.status(500).json({ message: 'Server error' });
+    console.error(error);
+    res.status(500).json({ message: 'Server error', error: error.message });
   }
 });
 
 module.exports = router;
+
+
 
