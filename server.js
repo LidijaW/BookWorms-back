@@ -1,34 +1,31 @@
-require('dotenv').config();
 const express = require('express');
-const cors = require('cors');
 const mongoose = require('mongoose');
-const cookieParser = require('cookie-parser');
-
-const authRoutes = require('./routes/auth');
+const bodyParser = require('body-parser');
+const dotenv = require('dotenv');
+const bookRoutes = require('./routes/bookRoutes');
 const adRoutes = require('./routes/adRoutes');
 const sellerRoutes = require('./routes/sellerRoutes');
-const bookRoutes = require('./routes/bookRoutes'); // Ovdje uvoziš bookRoutes
+const userRoutes = require('./routes/userRoutes');
+const authRoutes = require('./routes/authRoutes'); // Dodaj ovu liniju
+
+dotenv.config();
 
 const app = express();
 
-app.use(cors({ 
-    origin: 'http://localhost:8081/',
-    credentials: true
-}));
+app.use(bodyParser.json());
 
-app.use(express.json());
-app.use(cookieParser());
-app.use('/auth', authRoutes);
+mongoose.connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true
+}).then(() => console.log('Connected to Database'))
+  .catch((error) => console.log('Could not connect to Database', error));
+
+app.use('/books', bookRoutes);
 app.use('/ads', adRoutes);
 app.use('/sellers', sellerRoutes);
-app.use('/books', bookRoutes); 
+app.use('/users', userRoutes);
+app.use('/auth', authRoutes); // Dodaj ovu liniju
 
-mongoose.connect(process.env.MONGODB_URI)
-    .then(() => console.log('Connected to Database'))
-    .catch(err => console.error('Could not connect to Database'));
-
-const PORT = process.env.PORT || 3000;
-
-app.listen(PORT, () => {
-    console.log(`Server running on ${PORT}`);
-});
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
