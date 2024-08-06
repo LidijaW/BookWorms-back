@@ -10,9 +10,9 @@ const books = [
         author: 'J.R.R. Tolkien',
         genre: 'Fantasy',
         pages: 310,
-        year: 1937,
+        publicationYear: 1937,
         edition: '1st',
-        type: 'Roman',
+        literatureType: 'Roman',
         level: null,
         yearLevel: null
     },
@@ -21,9 +21,9 @@ const books = [
         author: 'Ivo Kolar',
         genre: 'Educational',
         pages: 200,
-        year: 2020,
+        publicationYear: 2020,
         edition: '2nd',
-        type: 'Udzbenik',
+        literatureType: 'Udzbenik',
         level: 'Srednja škola',
         yearLevel: '1'
     }
@@ -58,9 +58,8 @@ const ads = [
 ];
 
 mongoose.connect(process.env.MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
 })
+
 .then(async () => {
     console.log('Connected to Database');
     await Book.deleteMany({});
