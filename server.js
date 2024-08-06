@@ -6,7 +6,8 @@ const cookieParser = require('cookie-parser');
 
 const authRoutes = require('./routes/auth');
 const adRoutes = require('./routes/adRoutes');
-const sellerRoutes = require('./routes/sellerRoutes'); 
+const sellerRoutes = require('./routes/sellerRoutes');
+const bookRoutes = require('./routes/bookRoutes'); // Ovdje uvoziš bookRoutes
 
 const app = express();
 
@@ -19,8 +20,8 @@ app.use(express.json());
 app.use(cookieParser());
 app.use('/auth', authRoutes);
 app.use('/ads', adRoutes);
-app.use('/sellers', sellerRoutes); 
-app.use('/books', bookRoutes);
+app.use('/sellers', sellerRoutes);
+app.use('/books', bookRoutes); 
 
 mongoose.connect(process.env.MONGODB_URI)
     .then(() => console.log('Connected to Database'))
