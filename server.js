@@ -1,32 +1,39 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
-const dotenv = require('dotenv');
-const bookRoutes = require('./routes/bookRoutes');
-const adRoutes = require('./routes/adRoutes');
-const sellerRoutes = require('./routes/sellerRoutes');
-const userRoutes = require('./routes/userRoutes');
-const authRoutes = require('./routes/authRoutes'); 
+const cors = require('cors');
+require('dotenv').config();
 
-dotenv.config();
+const bookRoutes = require('./routes/bookRoutes');
+const sellerRoutes = require('./routes/sellerRoutes');
+const adRoutes = require('./routes/adRoutes');
+const userRoutes = require('./routes/userRoutes');
+const authRoutes = require('./routes/auth'); // Provjeri ovaj uvoz
 
 const app = express();
 
-app.use(bodyParser.json());
+// Middleware
+app.use(cors());
+app.use(express.json());
 
-mongoose.connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true
-}).then(() => console.log('Connected to Database'))
-  .catch((error) => console.log('Could not connect to Database', error));
-
+// Routes
 app.use('/books', bookRoutes);
-app.use('/ads', adRoutes);
 app.use('/sellers', sellerRoutes);
+app.use('/ads', adRoutes);
 app.use('/users', userRoutes);
-app.use('/auth', authRoutes); 
-
+app.use('/auth', authRoutes); // Provjeri ovaj red
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+  .then(() => {
+    console.log('Connected to Database');
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.error('Could not connect to Database', err);
+  });
