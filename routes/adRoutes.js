@@ -1,9 +1,10 @@
-const express = require('express');
-const Ad = require('../models/Ad');
-const router = express.Router();
+import express from 'express';
+import Ad from '../models/Ad.js';
+
+const adRoutes = express.Router();
 
 // Dohvaćanje svih oglasa
-router.get('/', async (req, res) => {
+adRoutes.get('/', async (req, res) => {
     try {
         const ads = await Ad.find()
             .populate('book')
@@ -16,7 +17,7 @@ router.get('/', async (req, res) => {
 });
 
 // Kreiranje novog oglasa
-router.post('/', async (req, res) => {
+adRoutes.post('/', async (req, res) => {
     const { adCode, description, publishDate, adType, book, seller } = req.body;
 
     try {
@@ -36,4 +37,4 @@ router.post('/', async (req, res) => {
     }
 });
 
-module.exports = router;
+export default adRoutes;

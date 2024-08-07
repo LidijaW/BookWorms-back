@@ -1,9 +1,9 @@
-const express = require('express');
-const Seller = require('../models/Seller');
-const router = express.Router();
+import express from 'express';
+import Seller from '../models/Seller.js'; 
+const sellerRoutes = express.Router();
 
 // Dohvaćanje svih prodavača
-router.get('/', async (req, res) => {
+sellerRoutes.get('/', async (req, res) => {
     try {
         const sellers = await Seller.find();
         res.status(200).json(sellers);
@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
 });
 
 // Kreiranje novog prodavača
-router.post('/', async (req, res) => {
+sellerRoutes.post('/', async (req, res) => {
     const { firstName, lastName, email } = req.body;
 
     try {
@@ -27,4 +27,4 @@ router.post('/', async (req, res) => {
     }
 });
 
-module.exports = router;
+export default sellerRoutes;
