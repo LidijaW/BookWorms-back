@@ -1,12 +1,12 @@
-import express from 'express';
-import mongoose from 'mongoose';
-import dotenv from 'dotenv';
+const express = require('express');
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
 
-import bookRoutes from './routes/bookRoutes.js';
-import adRoutes from './routes/adRoutes.js';
-import authRoutes from './routes/auth.js';
-import sellerRoutes from './routes/sellerRoutes.js';
-import userRoutes from './routes/userRoutes.js';
+const bookRoutes = require('./routes/bookRoutes');
+const adRoutes = require('./routes/adRoutes');
+const authRoutes = require('./routes/auth');
+const sellerRoutes = require('./routes/sellerRoutes');
+const userRoutes = require('./routes/userRoutes');
 
 dotenv.config();
 
