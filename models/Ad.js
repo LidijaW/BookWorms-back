@@ -1,10 +1,9 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const adSchema = new mongoose.Schema({
     adCode: {
         type: String,
-        required: true,
-        unique: true
+        required: true
     },
     description: {
         type: String,
@@ -12,7 +11,7 @@ const adSchema = new mongoose.Schema({
     },
     publishDate: {
         type: Date,
-        required: true
+        default: Date.now
     },
     adType: {
         type: String,
@@ -25,11 +24,11 @@ const adSchema = new mongoose.Schema({
     },
     seller: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Seller', // Provjeri da je referenca ispravna
+        ref: 'Seller',
         required: true
     }
 });
 
 const Ad = mongoose.model('Ad', adSchema);
 
-module.exports = Ad;
+export default Ad;

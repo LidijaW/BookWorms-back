@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const sellerSchema = new mongoose.Schema({
     firstName: {
@@ -18,4 +18,4 @@ const sellerSchema = new mongoose.Schema({
 
 const Seller = mongoose.model('Seller', sellerSchema);
 
-module.exports = Seller;
+export default Seller;
