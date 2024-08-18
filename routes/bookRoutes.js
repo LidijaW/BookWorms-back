@@ -6,7 +6,7 @@ const router = express.Router();
 // Dohvaćanje svih knjiga
 router.get('/', async (req, res) => {
     try {
-        const books = await Book.find();
+        const books = await Book.getBooks();
         res.status(200).json(books);
     } catch (error) {
         console.error(error);
@@ -19,12 +19,12 @@ router.post('/', async (req, res) => {
     const { title, author, publishDate } = req.body;
 
     try {
-        const newBook = new Book({
-            title,
-            author,
-            publishDate
-        });
-        await newBook.save();
+        //tocan kod: jer nije kontstruktor nego je funkcija
+        await Book.createBook(
+            req.body
+        );
+        //remove this everywhere
+        //await newBook.save();
         res.status(201).json(newBook);
     } catch (error) {
         console.error(error);

@@ -1,15 +1,18 @@
-import jwt from 'jsonwebtoken';
+import admin from 'firebase-admin';
 
-const authMiddleware = (req, res, next) => {
-    const token = req.header('Authorization').replace('Bearer ', '');
-    if (!token) return res.status(401).json({ message: 'No token, authorization denied' });
+const authMiddleware = async (req, res, next) => {
+    const token = req.headers.authorization?.split('Bearer ')[1];
+
+    if (!token) {
+        return res.status(401).json({ message: 'Unauthorized' });
+    }
 
     try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        req.user = decoded.user;
+        const decodedToken = await admin.auth().verifyIdToken(token);
+        req.user = decodedToken;
         next();
-    } catch (err) {
-        res.status(401).json({ message: 'Token is not valid' });
+    } catch (error) {
+        res.status(401).json({ message: 'Unauthorized', error: error.message });
     }
 };
 

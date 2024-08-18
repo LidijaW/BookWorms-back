@@ -1,6 +1,8 @@
-import User from '../models/User.js';
+import admin from 'firebase-admin';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+
+const db = admin.firestore();
 
 export const registerUser = async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
@@ -8,13 +10,15 @@ export const registerUser = async (req, res) => {
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const user = new User({
+    const userRef = db.collection('users').doc(); // Generate a new document ID
+    const user = {
       firstName,
       lastName,
       email,
-      password: hashedPassword
-    });
-    await user.save();
+      password: hashedPassword,
+    };
+
+    await userRef.set(user);
 
     res.status(201).json({ message: 'User registered successfully' });
   } catch (error) {
@@ -27,17 +31,21 @@ export const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const user = await User.findOne({ email });
-    if (!user) {
+    const userSnapshot = await db.collection('users').where('email', '==', email).get();
+
+    if (userSnapshot.empty) {
       return res.status(400).json({ message: 'Invalid credentials' });
     }
+
+    const userDoc = userSnapshot.docs[0];
+    const user = userDoc.data();
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(400).json({ message: 'Invalid credentials' });
     }
 
-    const token = jwt.sign({ user: { id: user.id } }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    const token = jwt.sign({ user: { id: userDoc.id } }, process.env.JWT_SECRET, { expiresIn: '1h' });
     res.status(200).json({ token });
   } catch (error) {
     console.error(error);

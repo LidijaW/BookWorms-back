@@ -1,16 +1,15 @@
-require('dotenv').config();
-const mongoose = require('mongoose');
-const Book = require('./models/Book');
-const Seller = require('./models/Seller');
-const Ad = require('./models/Ad');
+import admin from 'firebase-admin';
+import serviceAccount from './bookworms-back-firebase.json' assert { type: 'json' };
 
-mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => {
-    console.log('Connected to Database');
-    
-    // Podaci za knjige
-    const books = [
-      {
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    databaseURL: "https://<bookworms-back>.firebaseio.com"
+});
+
+const db = admin.firestore();
+
+const books = [
+    {
         title: "Hobit",
         author: "J.R.R. Tolkien",
         genre: "Fantastika",
@@ -18,8 +17,8 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTop
         publicationYear: 1937,
         edition: "Prvo izdanje",
         literatureType: "Roman"
-      },
-      {
+    },
+    {
         title: "Matematika 1",
         author: "Ivo Kamenar",
         genre: "Udzbenik",
@@ -29,74 +28,28 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTop
         literatureType: "Udzbenik",
         educationLevel: "Srednja skola",
         year: 2010
-      }
-    ];
+    }
+];
 
-    // Podaci za prodavače
-    const sellers = [
-      {
+const sellers = [
+    {
         firstName: "Ivan",
         lastName: "Ivic",
         email: "ivan.ivic@example.com"
-      },
-      {
+    },
+    {
         firstName: "Ana",
         lastName: "Anic",
         email: "ana.anic@example.com"
-      }
-    ];
+    }
+];
 
-    // Unos knjiga
-    Book.insertMany(books)
-      .then(insertedBooks => {
-        console.log('Books inserted');
+// Insert books
+books.forEach(async (book) => {
+    await db.collection('books').add(book);
+});
 
-        // Unos prodavača
-        Seller.insertMany(sellers)
-          .then(insertedSellers => {
-            console.log('Sellers inserted');
-
-            // Kreiranje oglasa sa stvarnim ID-ovima knjiga i prodavača
-            const ads = [
-              {
-                adCode: "A001",
-                description: "Prodajem knjigu Hobit",
-                publishDate: new Date(),
-                adType: "prodaja",
-                book: insertedBooks[0]._id,
-                seller: insertedSellers[0]._id
-              },
-              {
-                adCode: "A002",
-                description: "Razmjenjujem knjigu Matematika 1",
-                publishDate: new Date(),
-                adType: "razmjena",
-                book: insertedBooks[1]._id,
-                seller: insertedSellers[1]._id
-              }
-            ];
-
-            // Unos oglasa
-            Ad.insertMany(ads)
-              .then(() => {
-                console.log('Ads inserted');
-                mongoose.connection.close();
-              })
-              .catch(err => {
-                console.error('Error inserting ads:', err);
-                mongoose.connection.close();
-              });
-          })
-          .catch(err => {
-            console.error('Error inserting sellers:', err);
-            mongoose.connection.close();
-          });
-      })
-      .catch(err => {
-        console.error('Error inserting books:', err);
-        mongoose.connection.close();
-      });
-  })
-  .catch(err => {
-    console.error('Could not connect to Database', err);
-  });
+// Insert sellers
+sellers.forEach(async (seller) => {
+    await db.collection('sellers').add(seller);
+});
