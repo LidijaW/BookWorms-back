@@ -65,4 +65,4 @@ docker-compose.override.yml
  
 
 #
-bookworms-back-firebase.json
+../bookworms-back-firebase.json
