@@ -62,6 +62,7 @@ build/
 docker-compose.yml
 docker-compose.override.yml
 .dockerignore
+ 
 
-# Ignore MongoDB files
-dump/
+#
+bookworms-back-firebase.json
