@@ -39,6 +39,6 @@ export const deleteSeller = async (id) => {
     return { message: 'Seller deleted successfully' };
 };
 
-//TODO here too, follow Bookjs for it
-const Seller = {}; 
+
+const Seller = { createSeller, getSellers, getSellerById, updateSeller,deleteSeller}; 
 export default Seller;

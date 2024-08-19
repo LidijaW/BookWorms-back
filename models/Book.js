@@ -41,7 +41,6 @@ export const deleteBook = async (id) => {
     return { message: 'Book deleted successfully' };
 };
 
-//stavljanje sve u jedan blok
-//write everything in so it can be called over the Book variable
-const Book = {createBook, getBooks, }; 
+
+const Book = {createBook, getBooks, getBookById, updateBook, deleteBook }; 
 export default Book;

@@ -39,6 +39,6 @@ export const deleteAd = async (id) => {
     return { message: 'Ad deleted successfully' };
 };
 
-//TODO here too, follow Bookjs for it
-const Ad = {}; 
+
+const Ad = { createAd, getAds, getAdById, updateAd, deleteAd }; 
 export default Ad;
