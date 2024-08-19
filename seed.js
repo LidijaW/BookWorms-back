@@ -9,26 +9,26 @@ admin.initializeApp({
 const db = admin.firestore();
 
 const books = [
-    {
-        title: "Hobit",
-        author: "J.R.R. Tolkien",
-        genre: "Fantastika",
-        pages: 310,
-        publicationYear: 1937,
-        edition: "Prvo izdanje",
-        literatureType: "Roman"
-    },
-    {
-        title: "Matematika 1",
-        author: "Ivo Kamenar",
-        genre: "Udzbenik",
-        pages: 200,
-        publicationYear: 2010,
-        edition: "Drugo izdanje",
-        literatureType: "Udzbenik",
-        educationLevel: "Srednja skola",
-        year: 2010
-    }
+  {
+    title: "Umjetna Inteligencija: Budućnost Je Sada",
+    author: "Nikolina Šarić",
+    publishDate: "2022-12-14",
+    genre: "Publicistika",
+    edition: "1. izdanje",
+    literatureType: "Moderna knjiga",
+    educationLevel: "Opća",
+    year: 2022,
+  },
+  {
+    title: "Umjetna Inteligencija: Budućnost Je Sada",
+    author: "Nikolina Šarić",
+    publishDate: "2022-12-14",
+    genre: "Publicistika",
+    edition: "1. izdanje",
+    literatureType: "Moderna knjiga",
+    educationLevel: "Opća",
+    year: 2022,
+  },
 ];
 
 const sellers = [
