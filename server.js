@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import bodyParser from "body-parser";
+import cookieParser from "cookie-parser";
 import bookRoutes from "./routes/bookRoutes.js";
 import authRoutes from "./routes/auth.js";
 import adRoutes from "./routes/adRoutes.js";
@@ -12,6 +13,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
+app.use(cookieParser());
 
 app.use("/auth", authRoutes);
 
