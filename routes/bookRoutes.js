@@ -3,7 +3,7 @@ import Book from "../models/Book.js";
 
 const router = express.Router();
 
-// Fetching all books
+
 router.get("/", async (req, res) => {
   try {
     const books = await Book.getBooks();
@@ -14,7 +14,6 @@ router.get("/", async (req, res) => {
   }
 });
 
-// Creating a new book
 router.post("/", async (req, res) => {
   const { title, author, publishDate, genre, edition, literatureType, educationLevel, year } = req.body;
 

@@ -44,12 +44,12 @@ const sellers = [
     }
 ];
 
-// Insert books
+
 books.forEach(async (book) => {
     await db.collection('books').add(book);
 });
 
-// Insert sellers
+
 sellers.forEach(async (seller) => {
     await db.collection('sellers').add(seller);
 });

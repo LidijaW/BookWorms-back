@@ -1,8 +1,7 @@
 import admin from "firebase-admin";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-
-const db = admin.firestore();
+import db from "../firebase.js";
 
 export const registerUser = async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
@@ -54,13 +53,10 @@ export const loginUser = async (req, res) => {
       { expiresIn: "1h" }
     );
 
-    res.cookie("token", token, {
-      httpOnly: true, 
-      secure: process.env.NODE_ENV === "production", 
-      maxAge: 3600000, 
-    });
+    // Set the token as a cookie
+    res.cookie("token", token, { httpOnly: true });
 
-    res.status(200).json({ message: "Logged in successfully" });
+    res.status(200).json({ token });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error", error: error.message });

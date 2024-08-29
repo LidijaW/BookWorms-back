@@ -2,7 +2,7 @@ const express = require('express');
 const Chat = require('../models/Chat');
 const router = express.Router();
 
-// Get all chats for a specific ad
+
 router.get('/:adId', async (req, res) => {
     try {
         const chats = await Chat.find({ ad: req.params.adId }).populate('ad buyer');
@@ -12,7 +12,7 @@ router.get('/:adId', async (req, res) => {
     }
 });
 
-// Create a new chat
+
 router.post('/', async (req, res) => {
     const chat = new Chat(req.body);
     try {

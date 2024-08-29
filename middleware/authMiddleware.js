@@ -1,7 +1,7 @@
 import admin from "firebase-admin";
 
 const authMiddleware = async (req, res, next) => {
-  // Get the token from the cookie
+
   const token = req.cookies.token;
 
   if (!token) {
