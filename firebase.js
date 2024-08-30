@@ -1,7 +1,16 @@
 import admin from "firebase-admin";
+import "firebase/auth";
+import "firebase/firestore";
 
-//service account key JSON file
-import serviceAccount from "../backend/bookworms-back-firebase.json" assert { type: "json" };
+var firebaseConfig = {
+  apiKey: "AIzaSyBuP1yRKQw4uxal7NfiT62ztBnFwJZgg14",
+  authDomain: "bookworms-back.firebaseapp.com",
+  projectId: "bookworms-back",
+  storageBucket: "bookworms-back.appspot.com",
+  messagingSenderId: "165001694046",
+  appId: "1:165001694046:web:48be0467b98f71d7c0ddcf",
+};
+
 
 // Firebase
 admin.initializeApp({
