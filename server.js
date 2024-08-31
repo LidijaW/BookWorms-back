@@ -15,12 +15,12 @@ const PORT = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 
-app.use('api/auth', authRoutes);
+app.use('/auth', authRoutes);
 
 // Protected routes
-app.use('api/books', authMiddleware, bookRoutes);
-app.use('api/ads', authMiddleware, adRoutes);
-app.use('api/sellers', authMiddleware, sellerRoutes);
+app.use('/books', bookRoutes);
+app.use('/ads', authMiddleware, adRoutes);
+app.use('/sellers', authMiddleware, sellerRoutes);
 
 mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
