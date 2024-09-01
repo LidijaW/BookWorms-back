@@ -3,7 +3,7 @@ import Ad from '../models/Ad.js';
 
 const adRoutes = express.Router();
 
-// Dohvaćanje svih oglasa
+
 adRoutes.get('/', async (req, res) => {
     try {
         const ads = await Ad.find()
@@ -16,7 +16,6 @@ adRoutes.get('/', async (req, res) => {
     }
 });
 
-// Kreiranje novog oglasa
 adRoutes.post('/', async (req, res) => {
     const { adCode, description, publishDate, adType, book, seller } = req.body;
 

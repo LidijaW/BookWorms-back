@@ -2,7 +2,7 @@ import express from 'express';
 import Seller from '../models/Seller.js'; 
 const sellerRoutes = express.Router();
 
-// Dohvaćanje svih prodavača
+
 sellerRoutes.get('/', async (req, res) => {
     try {
         const sellers = await Seller.find();
@@ -13,7 +13,7 @@ sellerRoutes.get('/', async (req, res) => {
     }
 });
 
-// Kreiranje novog prodavača
+
 sellerRoutes.post('/', async (req, res) => {
     const { firstName, lastName, email } = req.body;
 

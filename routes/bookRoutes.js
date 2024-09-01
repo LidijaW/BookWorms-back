@@ -3,7 +3,7 @@ import Book from '../models/Book.js';
 
 const router = express.Router();
 
-// Dohvaćanje svih knjiga
+
 router.get('/', async (req, res) => {
     try {
         const books = await Book.find();
@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
     }
 });
 
-// Kreiranje nove knjige
+
 router.post('/', async (req, res) => {
     const { title, author, publishDate } = req.body;
 
