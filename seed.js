@@ -6,7 +6,7 @@ const Ad = require('./models/Ad');
 
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
-    console.log('Connected to Database');
+    console.log('Povezano s bazom podataka');
     
     // Podaci za knjige
     const books = [
@@ -17,18 +17,20 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTop
         pages: 310,
         publicationYear: 1937,
         edition: "Prvo izdanje",
-        literatureType: "Roman"
+        literatureType: "Roman",
+        description: "Knjiga o avanturama Bilba Baginsa, hobita iz Shirea, koji se upušta u opasno putovanje.",
       },
       {
         title: "Matematika 1",
         author: "Ivo Kamenar",
-        genre: "Udzbenik",
+        genre: "Udžbenik",
         pages: 200,
         publicationYear: 2010,
         edition: "Drugo izdanje",
-        literatureType: "Udzbenik",
-        educationLevel: "Srednja skola",
-        year: 2010
+        literatureType: "Udžbenik",
+        educationLevel: "Srednja škola",
+        year: 2010,
+        description: "Udžbenik matematike za srednju školu, obuhvaća osnovne matematičke koncepte i probleme.",
       }
     ];
 
@@ -36,12 +38,12 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTop
     const sellers = [
       {
         firstName: "Ivan",
-        lastName: "Ivic",
+        lastName: "Ivić",
         email: "ivan.ivic@example.com"
       },
       {
         firstName: "Ana",
-        lastName: "Anic",
+        lastName: "Anić",
         email: "ana.anic@example.com"
       }
     ];
@@ -49,12 +51,12 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTop
     // Unos knjiga
     Book.insertMany(books)
       .then(insertedBooks => {
-        console.log('Books inserted');
+        console.log('Knjige unesene');
 
         // Unos prodavača
         Seller.insertMany(sellers)
           .then(insertedSellers => {
-            console.log('Sellers inserted');
+            console.log('Prodavači uneseni');
 
             // Kreiranje oglasa sa stvarnim ID-ovima knjiga i prodavača
             const ads = [
@@ -78,25 +80,4 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTop
 
             // Unos oglasa
             Ad.insertMany(ads)
-              .then(() => {
-                console.log('Ads inserted');
-                mongoose.connection.close();
-              })
-              .catch(err => {
-                console.error('Error inserting ads:', err);
-                mongoose.connection.close();
-              });
-          })
-          .catch(err => {
-            console.error('Error inserting sellers:', err);
-            mongoose.connection.close();
-          });
-      })
-      .catch(err => {
-        console.error('Error inserting books:', err);
-        mongoose.connection.close();
-      });
-  })
-  .catch(err => {
-    console.error('Could not connect to Database', err);
-  });
+        
