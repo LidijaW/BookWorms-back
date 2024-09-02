@@ -14,22 +14,31 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Middleware
 app.use(cookieParser());
 app.use(bodyParser.json());
 
+// CORS Configuration
 const corsOptions = {
-  origin: "http://localhost:8081", 
+  origin: [
+    //"http://localhost:8081",
+    "https://book-worms-frontend.vercel.app",
+    "https://book-worms-frontend-git-master-lidijas-projects-91a47c65.vercel.app",
+    "https://book-worms-frontend-jnh1eitz6-lidijas-projects-91a47c65.vercel.app",
+  ],
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
 };
 
 app.use(cors(corsOptions));
 
+// Routes
 app.use("/bookworms/auth", authRoutes);
 app.use("/bookworms/books", bookRoutes);
 app.use("/bookworms/ads", adRoutes);
 app.use("/bookworms/sellers", sellerRoutes);
 
+// MongoDB Connection
 mongoose
   .connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
@@ -38,7 +47,7 @@ mongoose
   .then(() => {
     console.log("Connected to MongoDB");
     app.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`); 
+      console.log(`Server running on port ${PORT}`);
     });
   })
   .catch((error) => {
