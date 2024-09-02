@@ -25,7 +25,7 @@ const corsOptions = {
     "https://book-worms-frontend.vercel.app",
     "https://book-worms-frontend-git-master-lidijas-projects-91a47c65.vercel.app",
     "https://book-worms-frontend-74ceukb1c-lidijas-projects-91a47c65.vercel.app", 
-",
+
   ],
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
