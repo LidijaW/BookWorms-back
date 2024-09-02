@@ -21,7 +21,7 @@ app.use(bodyParser.json());
 // CORS Configuration
 const corsOptions = {
   origin: [
-    //"http://localhost:8081",
+    "http://localhost:8081",
     "https://book-worms-frontend.vercel.app",
     "https://book-worms-frontend-git-master-lidijas-projects-91a47c65.vercel.app",
     "https://book-worms-frontend-jnh1eitz6-lidijas-projects-91a47c65.vercel.app",
