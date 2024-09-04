@@ -8,7 +8,7 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTop
   .then(() => {
     console.log('Povezano s bazom podataka');
     
-    // Podaci za knjige
+
     const books = [
       {
         title: "Hobit",
@@ -34,7 +34,7 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTop
       }
     ];
 
-    // Podaci za prodavače
+  
     const sellers = [
       {
         firstName: "Ivan",
@@ -48,17 +48,17 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTop
       }
     ];
 
-    // Unos knjiga
+
     Book.insertMany(books)
       .then(insertedBooks => {
         console.log('Knjige unesene');
 
-        // Unos prodavača
+   
         Seller.insertMany(sellers)
           .then(insertedSellers => {
             console.log('Prodavači uneseni');
 
-            // Kreiranje oglasa sa stvarnim ID-ovima knjiga i prodavača
+       
             const ads = [
               {
                 adCode: "A001",

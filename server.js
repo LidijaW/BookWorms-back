@@ -39,7 +39,7 @@ app.use("/bookworms/books", bookRoutes);
 app.use("/bookworms/ads", adRoutes);
 app.use("/bookworms/sellers", sellerRoutes);
 
-// MongoDB Connection
+
 mongoose
   .connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
